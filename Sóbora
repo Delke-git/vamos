@@ -1,0 +1,9 @@
+Na linha 32 tá faltando um println
+
+Era pra ficar
+
+if(pontos==4){
+System.out.println("Vem ni mim camisa")
+Else if(pontos <4){
+System.out.println("O git viu o esquema")
+}
