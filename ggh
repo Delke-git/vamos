@@ -1,0 +1,110 @@
+import java.util.Scanner;
+
+class Lista {
+	private String nome;
+	private double estalecas;
+	private int quantidade;
+	private Lista proximo;
+
+	public Lista() {
+		this.nome = null;
+		this.estalecas = 0;
+		this.quantidade = 0;
+		this.proximo = null;
+	}
+
+	public void inserir(String nome, double estalecas, int quantidade) {
+		if (this.nome == null) {
+			this.nome = nome;
+			this.estalecas = estalecas;
+			this.quantidade = quantidade;
+			this.proximo = new Lista();
+
+		} else {
+			this.proximo.inserir(nome, estalecas, quantidade);
+		}
+	}
+
+	public void remover(String nome, int quantidade) {
+		if (this.nome != null) {
+			if (this.nome.equals(nome)) {
+				this.quantidade = this.quantidade - quantidade;
+				if (this.quantidade <= 0) {
+					this.quantidade = 0;
+				}
+			}else {
+				this.proximo.remover(nome, quantidade);	
+			}
+		} else {
+			
+		}
+	}
+
+	public String removergrupo(double estalecas, String produtoremovido) {
+		if (this.nome != null) {
+			if (this.estalecas > estalecas) {
+				produtoremovido = this.nome;
+				this.nome = this.proximo.nome;
+				this.estalecas = this.proximo.estalecas;
+				this.quantidade = this.proximo.quantidade;
+				this.proximo = this.proximo.proximo;
+				return produtoremovido;
+			} else {
+				return this.proximo.removergrupo(estalecas, produtoremovido);
+			}
+		} else {
+			return produtoremovido;
+		}
+	}
+
+	public boolean verificar(double estalecas) {
+		if (this.nome != null) {
+			if (this.estalecas > estalecas) {
+				return true;
+			} else {
+				return this.proximo.verificar(estalecas);
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public double consultar(double somatorio) {
+		if (this.nome != null) {
+			somatorio += this.estalecas * quantidade;
+			return this.proximo.consultar(somatorio);
+		} else {
+			return somatorio;
+
+		}
+	}
+
+	public boolean verificar2(String nome) {
+		if (this.nome != null) {
+			if (this.nome.equals(nome)) {
+				return true;
+			} else {
+				return this.proximo.verificar2(nome);
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public double verificarvalor(String nome, double valor) {
+		if (this.nome != null) {
+			if (this.nome.equals(nome)) {
+				return this.estalecas;
+			} else {
+				return this.proximo.verificarvalor(nome, valor);
+			}
+		} else {
+			return valor;
+		}
+	}
+
+	public int verificarquantidade(String nome, int qt) {
+		if (this.nome != null) {
+			if (this.nome.equals(nome)) {
+				return this.quantidade;
+			} else {
