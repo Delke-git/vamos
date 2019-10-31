@@ -1,0 +1,896 @@
+import java.io.*;
+import java.util.*;
+
+public class HuxleyCode {
+  public static void main(String args[]) {
+ 
+		// TODO Auto-generated method stub
+		Scanner in = new Scanner(System.in);
+		String tab[][] = new String[8][8];
+		String r = "";
+		for (int i = 0; i < tab.length; i++) {
+			for (int j = 0; j < tab.length; j++) {
+				tab[i][j] = in.next();
+			}
+		}
+		for (int i = 0; i < tab.length && r != "XEQUE"; i++) {
+			for (int j = 0; j < tab.length && r != "XEQUE"; j++) {
+				switch (tab[i][j]) {
+				case "p":
+					if (i > 0 && i < 7 && j > 0 && j < 7) {
+						if (tab[i + 1][j - 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						} else if (tab[i + 1][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					} else if (i == 0 && j == 0) {
+						if (tab[1][1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					} else if (i == 0 && j == 7) {
+						if (tab[1][6].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					} else if (j == 0 && i > 0 && i < 7) {
+						if (tab[i - 1][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+						if (tab[i + 1][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					} else {
+						r = "NAO XEQUE";
+					}
+					break;
+				case "b":
+					int n = 0;
+					boolean controleb = false;
+					while ((i - n) >= 0 && (j + n < 8) && controleb == false) {
+						if (tab[i - n][j + n].equals("K")) {
+							r = "XEQUE";
+							controleb = true;
+							break;
+						} else if (!tab[i - n][j + n].equals("K") && !tab[i - n][j + n].equals("-")
+								&& !tab[i - n][j + n].equals("b")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i - n][j + n].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n++;
+					}
+					n = 0;
+					while ((i - n) >= 0 && (j - n) >= 0 && controleb == false) {
+						if (tab[i - n][j - n].equals("K")) {
+							r = "XEQUE";
+							controleb = true;
+							break;
+						} else if (!tab[i - n][j - n].equals("K") && !tab[i - n][j - n].equals("-")
+								&& !tab[i - n][j - n].equals("b")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i - n][j - n].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n++;
+					}
+					n = 0;
+					while ((i + n) < 8 && (j - n) >= 0 && controleb == false) {
+						if (tab[i + n][j - n].equals("K")) {
+							r = "XEQUE";
+							controleb = true;
+							break;
+						} else if (!tab[i + n][j - n].equals("K") && !tab[i + n][j - n].equals("-")
+								&& !tab[i + n][j - n].equals("b")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i + n][j - n].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n++;
+					}
+					n = 0;
+					while ((i + n) < 8 && (j + n) < 8 && controleb == false) {
+						if (tab[i + n][j + n].equals("K")) {
+							r = "XEQUE";
+							controleb = true;
+							break;
+						} else if (!tab[i + n][j + n].equals("K") && !tab[i + n][j + n].equals("-")
+								&& !tab[i + n][j + n].equals("b")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i + n][j + n].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n++;
+					}
+					n = 0;
+					break;
+				case "t":
+					int x = 0;
+					boolean controlet = false;
+					while ((i - x) >= 0) {
+						if (tab[i - x][j].equals("K") && controlet == false) {
+							r = "XEQUE";
+							controlet = true;
+							break;
+						} else if (!tab[i - x][j].equals("K") && !tab[i - x][j].equals("-")
+								&& !tab[i - x][j].equals("t")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i - x][j].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x++;
+					}
+					x = 0;
+					while ((i + x) < 8 && controlet == false) {
+						if (tab[i + x][j].equals("K")) {
+							r = "XEQUE";
+							controlet = true;
+							break;
+						} else if (!tab[i + x][j].equals("K") && !tab[i + x][j].equals("-")
+								&& !tab[i + x][j].equals("t")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i + x][j].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x++;
+					}
+					x = 0;
+					while ((j - x) >= 0 && controlet == false) {
+						if (tab[i][j - x].equals("K")) {
+							r = "XEQUE";
+							controlet = true;
+							break;
+						} else if (!tab[i][j - x].equals("K") && !tab[i][j - x].equals("-")
+								&& !tab[i][j - x].equals("t")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i][j - x].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x++;
+					}
+					x = 0;
+					while ((j + x) < 8 && controlet == false) {
+						if (tab[i][j + x].equals("K")) {
+							r = "XEQUE";
+							controlet = true;
+							break;
+						} else if (!tab[i][j + x].equals("K") && !tab[i][j + x].equals("-")
+								&& !tab[i][j + x].equals("t")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i][j + x].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x++;
+					}
+					x = 0;
+					break;
+				case "q":
+					int n1 = 0;
+					int x1 = 0;
+					boolean controleq = false;
+					while ((i - n1) > 0 && (j + n1 < 8) && controleq == false) {
+						if (tab[i - n1][j + n1].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i - n1][j + n1].equals("K") && !tab[i - n1][j + n1].equals("-")
+								&& !tab[i - n1][j + n1].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i - n1][j + n1].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n1++;
+					}
+					n1 = 0;
+					while ((i - n1) > 0 && (j - n1) > 0 && controleq == false) {
+						if (tab[i - n1][j - n1].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i - n1][j - n1].equals("K") && !tab[i - n1][j - n1].equals("-")
+								&& !tab[i - n1][j - n1].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i - n1][j - n1].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n1++;
+					}
+					n1 = 0;
+					while ((i + n1) < 8 && (j - n1) > 0 && controleq == false) {
+						if (tab[i + n1][j - n1].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i + n1][j - n1].equals("K") && !tab[i + n1][j - n1].equals("-")
+								&& !tab[i + n1][j - n1].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i + n1][j - n1].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n1++;
+					}
+					n1 = 0;
+					while ((i + n1) < 8 && (j + n1) < 8 && controleq == false) {
+						if (tab[i + n1][j + n1].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i + n1][j + n1].equals("K") && !tab[i + n1][j + n1].equals("-")
+								&& !tab[i + n1][j + n1].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i + n1][j + n1].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						n1++;
+					}
+					n1 = 0;
+					while ((i - x1) > 0 && controleq == false) {
+						if (tab[i - x1][j].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i - x1][j].equals("K") && !tab[i - x1][j].equals("-")
+								&& !tab[i - x1][j].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i - x1][j].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x1++;
+					}
+					x1 = 0;
+					while ((i + x1) < 8 && controleq == false) {
+						if (tab[i + x1][j].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i + x1][j].equals("K") && !tab[i + x1][j].equals("-")
+								&& !tab[i + x1][j].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i + x1][j].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x1++;
+					}
+					x1 = 0;
+					while ((j - x1) > 0 && controleq == false) {
+						if (tab[i][j - x1].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i][j - x1].equals("K") && !tab[i][j - x1].equals("-")
+								&& !tab[i][j - x1].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i][j - x1].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x1++;
+					}
+					x = 0;
+					while ((j + x) < 8 && controleq == false) {
+						if (tab[i][j + x].equals("K")) {
+							r = "XEQUE";
+							controleq = true;
+							break;
+						} else if (!tab[i][j + x].equals("K") && !tab[i][j + x].equals("-")
+								&& !tab[i][j + x].equals("q")) {
+							r = "NAO XEQUE";
+							break;
+						} else if (tab[i][j + x].equals("-")) {
+							r = "NAO XEQUE";
+						}
+						x++;
+					}
+					x = 0;
+					break;
+				case "c":
+					if (i > 1 && j < 7) {
+						if (tab[i - 2][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i > 1 && j > 0) {
+						if (tab[i - 2][j - 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i > 0 && j < 6) {
+						if (tab[i - 1][j + 2].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i > 0 && j > 1) {
+						if (tab[i - 1][j - 2].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i < 6 && j < 6) {
+						if (tab[i + 2][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i < 6 && j > 0) {
+						if (tab[i + 2][j - 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i < 7 && j > 1) {
+						if (tab[i + 1][j - 2].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i < 7 && j < 6) {
+						if (tab[i + 1][j + 2].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					} else {
+						r = "NAO XEQUE";
+					}
+					break;
+				case "k":
+					if (i > 0) {
+						if (tab[i - 1][j].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i > 0 && j < 7) {
+						if (tab[i - 1][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (j < 7) {
+						if (tab[i][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i < 7 && j < 7) {
+						if (tab[i + 1][j + 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i < 7) {
+						if (tab[i + 1][j].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i < 7 && j > 0) {
+						if (tab[i + 1][j - 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (j > 0) {
+						if (tab[i][j - 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					}
+					if (i > 0 && j > 0) {
+						if (tab[i - 1][j - 1].equals("K")) {
+							r = "XEQUE";
+							break;
+						}
+					} else {
+						r = "NAO XEQUE";
+					}
+					break;
+				}
+			}
+		}
+
+		if (r == "XEQUE") {
+			int contPosicoes = 0;
+			boolean achou = true;
+			int xm = 0;
+			for (int i = 0; i < tab.length && achou; i++) {
+				for (int j = 0; j < tab.length && achou; j++) {
+					if (tab[i][j].equals("K")) {
+						if (i > 0) {
+							if (tab[i - 1][j].equals("-")||tab[i - 1][j].equals("p")) {
+								tab[i - 1][j] = "X";
+								contPosicoes++;
+							}
+						}
+						if (i > 0 && j < 7) {
+							if (tab[i - 1][j + 1].equals("-")) {
+								tab[i - 1][j + 1] = "X";
+								contPosicoes++;
+							}
+						}
+						if (j < 7) {
+							if (tab[i][j + 1].equals("-")) {
+								tab[i][j + 1] = "X";
+								contPosicoes++;
+							}
+						}
+						if (i < 7 && j < 7) {
+							if (tab[i + 1][j + 1].equals("-")) {
+								tab[i + 1][j + 1] = "X";
+								contPosicoes++;
+							}
+						}
+						if (i < 7) {
+							if (tab[i + 1][j].equals("-")) {
+								tab[i + 1][j] = "X";
+								contPosicoes++;
+							}
+						}
+						if (i < 7 && j > 0) {
+							if (tab[i + 1][j - 1].equals("-")) {
+								tab[i + 1][j - 1] = "X";
+								contPosicoes++;
+							}
+						}
+						if (j > 0) {
+							if (tab[i][j - 1].equals("-")) {
+								tab[i][j - 1] = "X";
+								contPosicoes++;
+							}
+						}
+						if (i > 0 && j > 0) {
+							if (tab[i - 1][j - 1].equals("-")) {
+								tab[i - 1][j - 1] = "X";
+								contPosicoes++;
+							}
+						}
+						achou = false;
+					}
+				}
+			}
+
+			for (int i = 0; i < tab.length; i++) {
+				for (int j = 0; j < tab.length; j++) {
+					switch (tab[i][j]) {
+					case "p":
+						if (i > 0 && i < 7 && j > 0 && j < 7) {
+							if (tab[i + 1][j - 1].equals("X") || tab[i + 1][j - 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (tab[i + 1][j + 1].equals("X") || tab[i + 1][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						} else if (i == 0 && j == 0) {
+							if (tab[1][1].equals("X") || tab[1][1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						} else if (i == 0 && j == 7) {
+							if (tab[1][6].equals("X") || tab[1][6].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						} else if (j == 0 && i > 0 && i < 7) {
+							if (tab[i - 1][j + 1].equals("X") || tab[i - 1][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+							if (tab[i + 1][j + 1].equals("X") || tab[i + 1][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						} else {
+							r = "NAO XEQUE";
+						}
+						break;
+					case "b":
+						int n = 0;
+						while ((i - n) >= 0 && (j + n < 8)) {
+							if (tab[i - n][j + n].equals("X") || tab[i - n][j + n].equals("K")) {
+								r = "XEQUE";
+
+								xm++;
+
+							} else if (!tab[i - n][j + n].equals("X") && !tab[i - n][j + n].equals("-")
+									&& !tab[i - n][j + n].equals("b")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i - n][j + n].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n++;
+						}
+						n = 0;
+						while ((i - n) >= 0 && (j - n) >= 0) {
+							if (tab[i - n][j - n].equals("X") || tab[i - n][j - n].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i - n][j - n].equals("X") && !tab[i - n][j - n].equals("-")
+									&& !tab[i - n][j - n].equals("b")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i - n][j - n].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n++;
+						}
+						n = 0;
+						while ((i + n) < 8 && (j - n) >= 0) {
+							if (tab[i + n][j - n].equals("X") || tab[i + n][j - n].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i + n][j - n].equals("X") && !tab[i + n][j - n].equals("-")
+									&& !tab[i + n][j - n].equals("b")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i + n][j - n].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n++;
+						}
+						n = 0;
+						while ((i + n) < 8 && (j + n) < 8) {
+							if (tab[i + n][j + n].equals("X") || tab[i + n][j + n].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i + n][j + n].equals("X") && !tab[i + n][j + n].equals("-")
+									&& !tab[i + n][j + n].equals("b")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i + n][j + n].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n++;
+						}
+						n = 0;
+						break;
+					case "t":
+						int x = 0;
+						while ((i - x) >= 0) {
+							if (tab[i - x][j].equals("X") || tab[i - x][j].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i - x][j].equals("X") && !tab[i - x][j].equals("-")
+									&& !tab[i - x][j].equals("t")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i - x][j].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x++;
+						}
+						x = 0;
+						while ((i + x) < 8) {
+							if (tab[i + x][j].equals("X") || tab[i + x][j].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i + x][j].equals("X") && !tab[i + x][j].equals("-")
+									&& !tab[i + x][j].equals("t")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i + x][j].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x++;
+						}
+						x = 0;
+						while ((j - x) >= 0) {
+							if (tab[i][j - x].equals("X") || tab[i][j - x].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i][j - x].equals("X") && !tab[i][j - x].equals("-")
+									&& !tab[i][j - x].equals("t")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i][j - x].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x++;
+						}
+						x = 0;
+						while ((j + x) < 8) {
+							if (tab[i][j + x].equals("X") || tab[i][j + x].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i][j + x].equals("X") && !tab[i][j + x].equals("-")
+									&& !tab[i][j + x].equals("t")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i][j + x].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x++;
+						}
+						x = 0;
+						break;
+					case "q":
+						int n1 = 0;
+						int x1 = 0;
+						while ((i - n1) > 0 && (j + n1 < 8)) {
+							if (tab[i - n1][j + n1].equals("X") || tab[i - n1][j + n1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i - n1][j + n1].equals("X") && !tab[i - n1][j + n1].equals("-")
+									&& !tab[i - n1][j + n1].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i - n1][j + n1].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n1++;
+						}
+						n1 = 0;
+						while ((i - n1) > 0 && (j - n1) > 0) {
+							if (tab[i - n1][j - n1].equals("X") || tab[i - n1][j - n1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i - n1][j - n1].equals("X") && !tab[i - n1][j - n1].equals("-")
+									&& !tab[i - n1][j - n1].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i - n1][j - n1].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n1++;
+						}
+						n1 = 0;
+						while ((i + n1) < 8 && (j - n1) > 0) {
+							if (tab[i + n1][j - n1].equals("X") || tab[i + n1][j - n1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i + n1][j - n1].equals("X") && !tab[i + n1][j - n1].equals("-")
+									&& !tab[i + n1][j - n1].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i + n1][j - n1].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n1++;
+						}
+						n1 = 0;
+						while ((i + n1) < 8 && (j + n1) < 8) {
+							if (tab[i + n1][j + n1].equals("X") || tab[i + n1][j + n1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i + n1][j + n1].equals("X") && !tab[i + n1][j + n1].equals("-")
+									&& !tab[i + n1][j + n1].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i + n1][j + n1].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							n1++;
+						}
+						n1 = 0;
+						while ((i - x1) > 0) {
+							if (tab[i - x1][j].equals("X") || tab[i - x1][j].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i - x1][j].equals("X") && !tab[i - x1][j].equals("-")
+									&& !tab[i - x1][j].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i - x1][j].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x1++;
+						}
+						x1 = 0;
+						while ((i + x1) < 8) {
+							if (tab[i + x1][j].equals("X") || tab[i + x1][j].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i + x1][j].equals("X") && !tab[i + x1][j].equals("-")
+									&& !tab[i + x1][j].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i + x1][j].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x1++;
+						}
+						x1 = 0;
+						while ((j - x1) > 0) {
+							if (tab[i][j - x1].equals("X") || tab[i][j - x1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i][j - x1].equals("X") && !tab[i][j - x1].equals("-")
+									&& !tab[i][j - x1].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i][j - x1].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x1++;
+						}
+						x = 0;
+						while ((j + x) < 8) {
+							if (tab[i][j + x].equals("X") || tab[i][j + x].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							} else if (!tab[i][j + x].equals("X") && !tab[i][j + x].equals("-")
+									&& !tab[i][j + x].equals("q")) {
+								r = "NAO XEQUE";
+								break;
+							} else if (tab[i][j + x].equals("-")) {
+								r = "NAO XEQUE";
+							}
+							x++;
+						}
+						x = 0;
+						break;
+					case "c":
+						if (i > 1 && j < 7) {
+							if (tab[i - 2][j + 1].equals("X") || tab[i - 2][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i > 1 && j > 0) {
+							if (tab[i - 2][j - 1].equals("X") || tab[i - 2][j - 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i > 0 && j < 6) {
+							if (tab[i - 1][j + 2].equals("X") || tab[i - 1][j + 2].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i > 0 && j > 1) {
+							if (tab[i - 1][j - 2].equals("X") || tab[i - 1][j - 2].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i < 6 && j < 6) {
+							if (tab[i + 2][j + 1].equals("X") || tab[i + 2][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i < 6 && j > 0) {
+							if (tab[i + 2][j - 1].equals("X") || tab[i + 2][j - 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i < 7 && j > 1) {
+							if (tab[i + 1][j - 2].equals("X") || tab[i + 1][j - 2].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i < 7 && j < 6) {
+							if (tab[i + 1][j + 2].equals("X") || tab[i + 1][j + 2].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						} else {
+							r = "NAO XEQUE";
+						}
+						break;
+					case "k":
+						if (i > 0) {
+							if (tab[i - 1][j].equals("X") || tab[i - 1][j].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i > 0 && j < 7) {
+							if (tab[i - 1][j + 1].equals("X") || tab[i - 1][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (j < 7) {
+							if (tab[i][j + 1].equals("X") || tab[i][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i < 7 && j < 7) {
+							if (tab[i + 1][j + 1].equals("X") || tab[i + 1][j + 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i < 7) {
+							if (tab[i + 1][j].equals("X") || tab[i + 1][j].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i < 7 && j > 0) {
+							if (tab[i + 1][j - 1].equals("X") || tab[i + 1][j - 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (j > 0) {
+							if (tab[i][j - 1].equals("X") || tab[i][j - 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						}
+						if (i > 0 && j > 0) {
+							if (tab[i - 1][j - 1].equals("X") || tab[i - 1][j - 1].equals("K")) {
+								r = "XEQUE";
+								xm++;
+
+							}
+						} else {
+							r = "NAO XEQUE";
+						}
+						break;
+					}
+				}
+			}
+			if (xm == contPosicoes + 1 || xm >= contPosicoes + 1) {
+				r = "XEQUE-MATE";
+			} else {
+				r = "XEQUE";
+			}
+		}
+		System.out.println(r);
+	   
+  }
+}
