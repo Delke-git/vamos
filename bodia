@@ -1,0 +1,87 @@
+bodia galera 
+
+import java.io.*;
+import java.util.*;
+FODASE
+class Lista {
+	// ATRIBUTOS
+	private long ano;
+	private String nome;
+	private Lista proximo;
+FODASE
+	//
+	// CONSTRUTOR
+	public Lista() {
+		this.ano = 0;
+		this.nome = null;FODASE
+		this.proximo = null;
+	}
+
+	long aux = 0;
+	String auxNome = null;FODASE
+
+	//
+	// METODOS:
+	public void inserir(long ano, String nome) {
+		if (this.proximo == null) {
+			this.ano = ano;FODASE
+			this.nome = nome;
+			this.proximo = new Lista();
+		} else {
+			if (this.ano > ano) {
+				aux = this.ano;
+				this.ano = ano;
+				ano = aux;
+				auxNome = this.nome;
+				this.nome = nome;
+				nome = auxNome;
+				this.proximo.inserir(ano, nome);
+			} else if (this.ano == ano) {
+				if (this.nome.compareTo(nome) > 0) {
+					auxNome = this.nome;
+					this.nome = nome;FODSE
+					nome = auxNome;
+					this.proximo.inserir(ano, nome);
+				}else if (this.nome.compareTo(nome)<0) {
+					this.proximo.inserir(ano, nome);
+				}
+			} else {
+				this.proximo.inserir(ano, nome);
+			}
+		}
+	}
+
+	public String imprimir(Lista lista) {
+		String auxAno = "";
+		String resposta = "";
+		while (this.ano != 0) {
+			if (this.proximo.ano != 0) {
+				return resposta += this.ano + " - " + this.nome + "\n" + this.proximo.imprimir(lista);
+			} else {
+				return resposta += this.ano + " - " + this.nome;
+fodASE
+			}
+
+		}
+		return resposta;
+	}
+	//
+}
+
+public class HuxleyCode {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner in = new Scanner(System.in);
+		Lista lista = new Lista();
+		String nome = "";
+		long ano = 0;
+		while (in.hasNextLine()) {
+			nome = in.nextLine();
+			ano = Long.parseLong(in.nextLine());
+			lista.inserir(ano, nome);
+		}
+		System.out.println(lista.imprimir(lista));
+	}
+
+}
